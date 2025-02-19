@@ -14,7 +14,7 @@ const Sidebar = () => {
         </div>
         <div className="sidebar__item">
           <NavLink 
-            to="/inicio" 
+            to="/" 
             className={({ isActive }) => (isActive ? "sidebar__text--link active" : "sidebar__text--link")}
           >
             <FontAwesomeIcon icon={faHouse} className='sidebar__icons' />
