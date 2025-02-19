@@ -21,4 +21,6 @@ mongoose
     })
     .catch((error) => console.log(error));
 
+app.use("/uploads", express.static("uploads"));
+
 app.use("/api", route);

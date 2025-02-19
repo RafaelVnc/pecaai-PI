@@ -1,12 +1,23 @@
 import itemCardapio from "../model/itemCardapioModel.js";
 
-export const adicionarItem = async(req, res)=>{
+export const adicionarItem = async (req, res) => {
   try {
-      const newItem = new itemCardapio(req.body);
-      const savedData = await newItem.save();
-      res.status(200).json(savedData);
+    const { name, descricao, preco, ativo, categoria } = req.body;
+    const fotoURL = `/uploads/${req.file.filename}`;
+
+    const newItem = new itemCardapio({
+      name,
+      descricao,
+      preco,
+      fotoURL,
+      ativo,
+      categoria
+    });
+
+    const savedData = await newItem.save();
+    res.status(201).json(savedData);
   } catch (error) {
-      res.status(500).json({errorMessage:error.message})
+    res.status(500).json({ errorMessage: error.message });
   }
 };
 
