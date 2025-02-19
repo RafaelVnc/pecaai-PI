@@ -21,4 +21,4 @@ mongoose
     })
     .catch((error) => console.log(error));
 
-app.use("/cardapio",route)
+app.use("/api", route);
