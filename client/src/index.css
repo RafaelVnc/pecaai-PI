@@ -34,9 +34,11 @@ body {
   flex-direction: column;
 }
 
-.sidebar__text {
-  color: var(--text-color);
+.active {
+  background-color: #03244A;
+  border-radius: 1rem;
 }
+
 
 .sidebar-top {
   display: flex;
@@ -45,15 +47,74 @@ body {
 
 .sidebar-top__logo {
   width: 10rem;
+  margin: 1rem 0rem;
 }
 
 .sidebar__item {
   display: flex;
-  margin: 1.5rem;
+}
+
+.sidebar__icons{
+  margin-right: 1.2rem;
+  height: 27px;
+  width: 27px;
+}
+
+.sidebar__icons--account{
+  margin-left: -0.1rem;
+  margin-right: 1.2rem;
+  height: 40px;
+  width: 40px;
+}
+
+.sidebar__icons--logout{
+  margin-right: 0.5rem;
+  height: 20px;
+  width: 20px;
 }
 
 .sidebar__text { 
   display: flex;
   align-items: center;
+  color: var(--text-color);
+}
+
+.sidebar__text--link { 
+  display: flex;
+  align-items: center;
   text-decoration: none;
+  color: var(--text-color);
+  margin: 1.25rem 0.75rem;
+  padding: 1.25rem 0.75rem;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: border-radius 0.1s ease, color 0.1s ease;
+}
+
+.sidebar__text--link:hover{
+  background-color: #03244A;
+  border-radius: 1rem;
+}
+
+.sidebar__text--account { 
+  font-size: 1.5rem;
+}
+
+.sidebar__text--logout { 
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+}
+
+.sidebar-end{
+  display: flex;
+  margin: 2.5rem 1.5rem;
+}
+
+.sidebar-end__button{
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+}
+
+.sidebar-end__button:hover{
+  color: var(--main-color-dark);
 }
