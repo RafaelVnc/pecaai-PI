@@ -126,6 +126,13 @@ body {
   color: var(--main-color-dark);
 }
 
+@media (max-width: 1366px){
+  .sidebar__text--link {
+    margin: 0.5rem 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
 /* Main Container */
 
 .main{
