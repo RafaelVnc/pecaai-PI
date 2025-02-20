@@ -144,3 +144,15 @@ body {
 }
 
 /* Home */
+
+/* ItemList */
+.item-list {
+  background-color: var(--cinza-light);
+  padding: 1rem;
+}
+
+.item-list__container {
+  margin-top: 1rem;
+}
+
+/* SingleItem */
