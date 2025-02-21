@@ -145,14 +145,77 @@ body {
 
 /* Home */
 
+/* Cardapio */
+.cardapio__add-btn {
+  background-color: var(--cinza-light);
+  display: flex;
+  justify-content: center;
+}
+
+.cardapio__add-btn a {
+  background-color: var(--main-color);
+  color: #fff;
+  border-radius: 1rem;
+  padding: 2%;
+  font-size: 25px;
+  text-decoration: none;
+  margin: 3rem;
+}
+
+.cardapio__add-btn a:hover{
+  background-color: var(--main-color-dark);
+}
+
 /* ItemList */
 .item-list {
   background-color: var(--cinza-light);
   padding: 1rem;
+
 }
 
 .item-list__container {
   margin-top: 1rem;
+  display: flex;
 }
 
 /* SingleItem */
+.single-item{
+  margin-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  max-height: 25rem;
+  max-width: 15rem;
+}
+
+.single-item__img img {
+  max-width: 240px;
+  border: 4px solid var(--main-color);
+}
+
+.single-item__text{
+  color: black;
+}
+
+.single-item__edit a{
+  text-decoration: none;
+  color: var(--main-color);
+}
+
+.single-item__edit a:hover{
+  text-decoration: underline;
+  color: var(--main-color);
+}
+
+.single-item__ativo-btn button {
+  color: var(--main-color);
+  border: none;
+  background-color: var(--cinza-light);
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.single-item__ativo-btn button:hover {
+  color: var(--main-color-dark);
+}

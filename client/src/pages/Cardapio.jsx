@@ -1,6 +1,7 @@
 import React from 'react';
 import ItemList from '../components/ItemList';
 import { cardapioArray } from '../assets/database/cardapioArray.js';
+import { Link } from "react-router-dom";
 
 const Cardapio = () => {
   const entradaArray = cardapioArray.filter(i => i.categoria === "Entrada");
@@ -16,6 +17,9 @@ const Cardapio = () => {
       <ItemList categoria="Bebida" itensArray={bebidaArray}/>
       <ItemList categoria="Sobremesa" itensArray={sobremesaArray}/>
       
+      <div className='cardapio__add-btn'>
+        <Link to="/itemAdd"> + Adicionar item </Link>
+      </div>
     </div>
   );
 }
