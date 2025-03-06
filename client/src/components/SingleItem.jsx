@@ -5,7 +5,6 @@ import { faToggleOn, faToggleOff, faPenToSquare, faTrashCan } from '@fortawesome
 import { Link } from "react-router-dom";
 import ConfirmDelete from './ConfirmDelete';
 
-
 const SingleItem = ({ _id, name, descricao, preco, fotoURL, ativo: initialAtivo }) => {
   const [ativo, setAtivo] = useState(initialAtivo);
 
@@ -42,7 +41,7 @@ const SingleItem = ({ _id, name, descricao, preco, fotoURL, ativo: initialAtivo 
         </button>
       </div>
       <div className="single-item__edit">
-        <Link to="/itemEdit"> <FontAwesomeIcon icon={faPenToSquare}/> Editar item </Link>
+        <Link to={`/itemEdit/${_id}`}> <FontAwesomeIcon icon={faPenToSquare}/> Editar item </Link>
       </div>
       <div className="single-item__delete">
         <button onClick={() => setShowDeleteModal(true)}> <FontAwesomeIcon icon={faTrashCan}/> Excluir item </button>
@@ -55,9 +54,8 @@ const SingleItem = ({ _id, name, descricao, preco, fotoURL, ativo: initialAtivo 
           onClose={() => setShowDeleteModal(false)}
         />
       )}
-      
     </div>
   )
 }
 
-export default SingleItem
+export default SingleItem;

@@ -47,13 +47,23 @@ export const getItemById = async(req, res) => {
 export const updateItem = async(req, res) => {
   try {
     const id = req.params.id;
-    
-    const updatedData = await itemCardapio.findByIdAndUpdate(id, req.body, {
+    const fotoURL = req.file ? `http://localhost:8000/uploads/${req.file.filename}` : req.body.fotoURL;
+
+    const updateBody = {
+      name:req.body.name,
+      descricao: req.body.descricao,
+      preco: req.body.preco,
+      categoria: req.body.categoria,
+      fotoURL: fotoURL,
+      ativo:req.body.ativo
+    }
+
+    const updatedData = await itemCardapio.findByIdAndUpdate(id, updateBody, {
         new:true
     })
     res.status(200).json(updatedData);
   } catch (error) {
-    res.status(500).json({errorMessage:error.message})
+    res.status(500).json({ errorMessage: error.message });
   }
 };
 

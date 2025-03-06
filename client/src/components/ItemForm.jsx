@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SuccessModal from './SuccessModal';
 
-
-const ItemForm = ({ method }) => {
-  const [showSuccess, setShowSucces] = useState(false);
-
+const ItemForm = ({ method, _id, name, preco, categoria, descricao, fotoURL }) => {
+  const [showSuccess, setShowSuccess] = useState(false);
+  
   const [formData, setFormData] = useState({
     name: '',
     preco: '',
@@ -13,6 +12,18 @@ const ItemForm = ({ method }) => {
     descricao: '',
     fotoURL: null,
   });
+
+  useEffect(() => {
+    if (method === "edit") {
+      setFormData({
+        name: name,
+        preco: preco,
+        categoria: categoria,
+        descricao: descricao,
+        fotoURL: fotoURL,
+      });
+    }
+  }, [method, name, preco, categoria, descricao, fotoURL]);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -23,7 +34,6 @@ const ItemForm = ({ method }) => {
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,16 +42,19 @@ const ItemForm = ({ method }) => {
     for (let key in formData) {
       form.append(key, formData[key]);
     }
-
+    
     try {
-      const response = await axios({
-        method: method === 'add' ? 'post' : 'put', 
-        url: 'http://localhost:8000/api/cardapio/item', 
-        data: form,
-      });
+      if (method === 'add') {
+        const response = await axios.post("http://localhost:8000/api/cardapio/item", form);
+        if (response.status === 201) {
+          setShowSuccess(true);
+        }
+      } else {
+        const response = await axios.put(`http://localhost:8000/api/cardapio/item/${_id}`, form);
 
-      if (response.status === 201) {
-        setShowSucces(true);
+        if (response.status === 200) {
+          setShowSuccess(true);
+        }
       }
     } catch (error) {
       console.error('Erro ao enviar os dados:', error);
@@ -104,7 +117,7 @@ const ItemForm = ({ method }) => {
           type="file"
           id="fotoURL"
           accept="image/*"
-          required
+          required={method === "add"}
           name="fotoURL"
           onChange={handleChange}
         />
