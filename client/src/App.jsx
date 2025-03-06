@@ -6,6 +6,7 @@ import Pedidos from "./pages/Pedidos";
 import Avaliacoes from "./pages/Avaliacoes";
 import Dashboard from "./pages/Dashboard";
 import Relatorios from "./pages/Relatorios";
+import ItemAdd from "./pages/ItemAdd";
 
 const App = () => {
 
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/avaliacoes" element={<Avaliacoes />}/>
           <Route path="/dashboard" element={<Dashboard />}/>
           <Route path="/relatorios" element={<Relatorios />}/>
+          <Route path="/itemAdd" element={<ItemAdd />}/>
         </Routes>
       </BrowserRouter>
     </>

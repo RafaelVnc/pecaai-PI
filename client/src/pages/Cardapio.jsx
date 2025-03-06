@@ -20,6 +20,7 @@ const Cardapio = () => {
       <div className='cardapio__add-btn'>
         <Link to="/itemAdd"> + Adicionar item </Link>
       </div>
+      
     </div>
   );
 }

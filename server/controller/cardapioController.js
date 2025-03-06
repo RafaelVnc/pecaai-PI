@@ -4,7 +4,8 @@ import itemCardapio from "../model/itemCardapioModel.js";
 
 export const adicionarItem = async (req, res) => {
   try {
-    const { name, descricao, preco, ativo, categoria } = req.body;
+    const { name, descricao, preco, categoria } = req.body;
+    const ativo = true
     const fotoURL = `http://localhost:8000/uploads/${req.file.filename}`;
 
     const newItem = new itemCardapio({

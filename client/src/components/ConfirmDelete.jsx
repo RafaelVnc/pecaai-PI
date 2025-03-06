@@ -17,12 +17,14 @@ const ConfirmDelete = ({ _id, name, onClose }) => {
   };
 
   return (
-    <div className='modal-confirm-delete'>
-      <div className='modal-confirm-delete__content'>
-        <h1>Quer mesmo excluir o item:</h1>
-        <h2>{name}</h2>
-        <button className='modal-confirm-delete__sim-btn' onClick={deleteItem}>Sim, excluir</button>
-        <button className='modal-confirm-delete__nao-btn' onClick={onClose}>Não, voltar</button>
+    <div className='modal__bkground'> 
+      <div className='modal-confirm-delete'>
+        <div className='modal-confirm-delete__content'>
+          <h1>Quer mesmo excluir o item:</h1>
+          <h2>{name}</h2>
+          <button className='modal-confirm-delete__sim-btn' onClick={deleteItem}>Sim, excluir</button>
+          <button className='modal-confirm-delete__nao-btn' onClick={onClose}>Não, voltar</button>
+        </div>
       </div>
     </div>
   )
