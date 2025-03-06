@@ -208,6 +208,21 @@ body {
   color: var(--main-color);
 }
 
+.single-item__delete button{
+  text-decoration: none;
+  color: red;
+  background-color: var(--cinza-light);
+  border: none;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.single-item__delete button:hover{
+  text-decoration: underline;
+  color: red;
+}
+
 .single-item__ativo-btn button {
   color: var(--main-color);
   border: none;
@@ -218,4 +233,51 @@ body {
 
 .single-item__ativo-btn button:hover {
   color: var(--main-color-dark);
+}
+
+/* Modal Confirm Delete*/
+.modal-confirm-delete{
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  top: 33%;
+  background-color: var(--main-color);
+  border: 0.5rem solid var(--main-color-dark);
+  left: 25rem;
+  text-align: center;
+  justify-content: center;
+  color: #fff;
+  padding: 2rem;
+  max-width: 50rem;
+  min-width: 50rem;
+}
+
+.modal-confirm-delete__sim-btn{
+  border: 0.2rem solid rgb(0, 73, 0);
+  background-color: green;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  padding: 0.3rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-right: 2rem;
+}
+
+.modal-confirm-delete__nao-btn{
+  border: 0.2rem solid rgb(185, 0, 0);
+  background-color: red;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  padding: 0.3rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.modal-confirm-delete__sim-btn:hover{
+  background-color:  rgb(0, 73, 0);
+}
+
+.modal-confirm-delete__nao-btn:hover{
+  background-color: rgb(185, 0, 0);
 }

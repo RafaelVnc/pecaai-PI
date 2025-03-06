@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import itemCardapio from "../model/itemCardapioModel.js";
 
 export const adicionarItem = async (req, res) => {
@@ -58,6 +60,18 @@ export const deleteItem = async(req, res) => {
   try {
     const id = req.params.id;
     
+    const itemExist = await itemCardapio.findById(id);
+    if (!itemExist) {
+      return res.status(404).json({ errorMessage: "Item não encontrado" });
+    }
+
+    const filePath = path.resolve("uploads", path.basename(itemExist.fotoURL));
+    fs.unlink(filePath, (err) => {
+      if (err && err.code !== "ENOENT") {
+        console.error("Erro ao deletar a imagem:", err);
+      }
+    });
+
     await itemCardapio.findByIdAndDelete(id);
     
     res.status(200).json({ message: "Item deletado com sucesso!" });
