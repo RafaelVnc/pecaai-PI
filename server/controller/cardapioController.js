@@ -5,7 +5,8 @@ import itemCardapio from "../model/itemCardapioModel.js";
 export const adicionarItem = async (req, res) => {
   try {
     const { name, descricao, preco, categoria } = req.body;
-    const ativo = true
+    const ativo = true;
+    const quantidadeVendida = 0;
     const fotoURL = `http://localhost:8000/uploads/${req.file.filename}`;
 
     const newItem = new itemCardapio({
@@ -14,7 +15,8 @@ export const adicionarItem = async (req, res) => {
       preco,
       fotoURL,
       ativo,
-      categoria
+      categoria,
+      quantidadeVendida
     });
 
     const savedData = await newItem.save();
@@ -47,20 +49,36 @@ export const getItemById = async(req, res) => {
 export const updateItem = async(req, res) => {
   try {
     const id = req.params.id;
-    const fotoURL = req.file ? `http://localhost:8000/uploads/${req.file.filename}` : req.body.fotoURL;
+    
+    const itemExist = await itemCardapio.findById(id);
+    if (!itemExist) {
+      return res.status(404).json({ errorMessage: "Item não encontrado" });
+    }
+
+    if (req.file) {
+      const oldFilePath = path.resolve("uploads", path.basename(itemExist.fotoURL));
+      fs.unlink(oldFilePath, (err) => {
+        if (err && err.code !== "ENOENT") {
+          console.error("Erro ao deletar a imagem antiga:", err);
+        }
+      });
+    }
+
+    const fotoURL = req.file ? `http://localhost:8000/uploads/${req.file.filename}` : itemExist.fotoURL;
 
     const updateBody = {
-      name:req.body.name,
+      name: req.body.name,
       descricao: req.body.descricao,
       preco: req.body.preco,
       categoria: req.body.categoria,
       fotoURL: fotoURL,
-      ativo:req.body.ativo
-    }
+      ativo: req.body.ativo
+    };
 
     const updatedData = await itemCardapio.findByIdAndUpdate(id, updateBody, {
-        new:true
-    })
+      new: true
+    });
+    
     res.status(200).json(updatedData);
   } catch (error) {
     res.status(500).json({ errorMessage: error.message });

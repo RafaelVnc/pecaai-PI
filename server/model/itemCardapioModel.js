@@ -24,7 +24,16 @@ const itemCardapioSchema = new mongoose.Schema({
   categoria:{
     type:String,
     required: true
+  },
+  quantidadeVendida:{
+    type: Number,
+    required: true
+  },
+  idUsuario:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref: 'Usuario',
+    //required: true
   }
-})
+});
 
 export default mongoose.model("ItemCardapio", itemCardapioSchema);
