@@ -1,13 +1,14 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 
 const ConfirmDelete = ({ _id, name, onClose }) => {
-  
   const deleteItem = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8000/api/cardapio/item/${_id}`);
+      const response = await axios.delete(
+        `http://localhost:8000/cardapio/item/${_id}`
+      );
 
-      if (response.status === 200){
+      if (response.status === 200) {
         onClose();
         window.location.reload();
       }
@@ -17,17 +18,24 @@ const ConfirmDelete = ({ _id, name, onClose }) => {
   };
 
   return (
-    <div className='modal__bkground'> 
-      <div className='modal-confirm-delete'>
-        <div className='modal-confirm-delete__content'>
+    <div className="modal__bkground">
+      <div className="modal-confirm-delete">
+        <div className="modal-confirm-delete__content">
           <h1>Quer mesmo excluir o item:</h1>
           <h2>{name}</h2>
-          <button className='modal-confirm-delete__sim-btn' onClick={deleteItem}>Sim, excluir</button>
-          <button className='modal-confirm-delete__nao-btn' onClick={onClose}>Não, voltar</button>
+          <button
+            className="modal-confirm-delete__sim-btn"
+            onClick={deleteItem}
+          >
+            Sim, excluir
+          </button>
+          <button className="modal-confirm-delete__nao-btn" onClick={onClose}>
+            Não, voltar
+          </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ConfirmDelete;

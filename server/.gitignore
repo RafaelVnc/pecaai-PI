@@ -3,3 +3,4 @@ uploads/*.jpeg
 uploads/*.jpg
 uploads/*.png
 .env
+*.pem

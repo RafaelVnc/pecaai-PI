@@ -36,4 +36,4 @@ const itemCardapioSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.model("ItemCardapio", itemCardapioSchema);
+export default mongoose.model("itemCardapio", itemCardapioSchema);

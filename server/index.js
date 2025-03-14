@@ -2,8 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import route from "./routes/cardapioRoute.js";
 import cors from "cors";
+import routeCardapio from "./routes/cardapioRoute.js";
+import routeUser from "./routes/userRoute.js";
 
 const app = express();
 app.use(bodyParser.json());
@@ -26,4 +27,5 @@ mongoose
 
 app.use("/uploads", express.static("uploads"));
 
-app.use("/api", route);
+app.use("/cardapio", routeCardapio);
+app.use("/usuario", routeUser)
