@@ -2,6 +2,10 @@ import bcrypt from 'bcrypt';
 import forge from "node-forge";
 import Usuario from "../model/usuarioModel.js";
 import { publicKey, privateKey } from '../config/keys.js';
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const encryptPassword = (password) => {
     const rsaPublicKey = forge.pki.publicKeyFromPem(publicKey);
@@ -134,16 +138,22 @@ export const logarUsuario = async (req, res) => {
     try {
         const { email, senha } = req.body;
 
-        const usuarioEncontrado = await Usuario.findOne({ email });
-        if (!usuarioEncontrado) return res.status(404).json({ errorMessage: "Usuário não encontrado" });
-
-        const decryptedPassword = decryptPassword(usuarioEncontrado.senha);
-
-        if (senha !== decryptedPassword) {
-            return res.status(401).json({ error: "Senha incorreta" });
+        if (!email || !senha) {
+            return res.status(400).json({ errorMessage: "Email e senha são obrigatórios" });
         }
 
-        res.status(200).json({ message: "Login efetuado!"});
+        const usuarioEncontrado = await Usuario.findOne({ email });
+        if (!usuarioEncontrado) return res.status(404).json({ errorMessage: "Credenciais incorretas." });
+
+        if (senha !== decryptPassword(usuarioEncontrado.senha)) {
+            return res.status(401).json({ error: "Credenciais incorretas." });
+        }
+        
+        const JWT_SECRET = process.env.JWT_SECRET
+ 
+        const token = jwt.sign({idUsuario: usuarioEncontrado._id}, JWT_SECRET, { expiresIn: '24h'});
+
+        res.status(200).json({ message: "Login efetuado!", token });
     } catch (error) {
         res.status(500).json({ errorMessage: error.message });
     }
@@ -157,9 +167,8 @@ export const atualizarUsuario = async (req, res) => {
 
         const usuario = await Usuario.findOne({ _id })
 
-        const decryptedPassword = decryptPassword(usuario.senha);
-        if (senha !== decryptedPassword) {
-            return res.status(401).json({ errorMessage: "Senha atual incorreta!" });
+        if (senha !== decryptPassword(usuarioEncontrado.senha)) {
+            return res.status(401).json({ error: "Credenciais incorretas." });
         }
 
         if (novoEmail && novoEmail !== usuario.email) {
