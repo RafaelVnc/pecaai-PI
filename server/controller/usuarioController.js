@@ -18,6 +18,41 @@ const decryptPassword = (encryptedPassword) => {
     return decrypted;
 };
 
+const validaCPF = (cpf) => {
+    // Remove caracteres não numéricos, caso haja
+    cpf = cpf.replace(/[^\d]+/g, '');
+
+    // Verifica se o CPF possui 11 dígitos
+    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
+        return false;
+    }
+
+    // Validação dos dígitos verificadores
+    let soma = 0;
+    let resto;
+
+    // Valida o primeiro dígito verificador
+    for (let i = 1; i <= 9; i++) {
+        soma += parseInt(cpf.charAt(i - 1)) * (11 - i);
+    }
+
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.charAt(9))) return false;
+
+    soma = 0;
+    // Valida o segundo dígito verificador
+    for (let i = 1; i <= 10; i++) {
+        soma += parseInt(cpf.charAt(i - 1)) * (12 - i);
+    }
+
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.charAt(10))) return false;
+
+    return true;
+}
+
 export const cadastrarUsuarioEstabelecimento = async (req, res) => {
     try {
         const { email, CPF, senha, telefone, endereco, nomeEstabelecimento } = req.body;
@@ -31,6 +66,11 @@ export const cadastrarUsuarioEstabelecimento = async (req, res) => {
         }
         if (CPFEncontrado) {
             return res.status(409).json({ errorMessage: "CPF já cadastrado" });
+        }
+        if (!validaCPF(CPF)){
+            return res.status(400).json({
+                errorMessage: "CPF inválido!"
+            });
         }
         
         const encryptedPassword = encryptPassword(senha);
@@ -66,7 +106,11 @@ export const cadastrarUsuarioCliente = async (req, res) => {
         if (CPFEncontrado) {
             return res.status(409).json({ errorMessage: "CPF já cadastrado" });
         }
-
+        if (!validaCPF(CPF)){
+            return res.status(400).json({
+                errorMessage: "CPF inválido!"
+            });
+        }
 
         const encryptedPassword = encryptPassword(senha);
 
@@ -106,7 +150,7 @@ export const logarUsuario = async (req, res) => {
 }
 
 export const atualizarUsuario = async (req, res) => {
-    const { senha, novoEmail, novoCPF, novoTelefone, novoEndereco, novoNomeEstabelecimento, novaSenha } = req.body;
+    const { senha, novoEmail, novoTelefone, novoEndereco, novoNomeEstabelecimento, novaSenha } = req.body;
 
     try {
         const _id = req.params.id;
@@ -123,18 +167,12 @@ export const atualizarUsuario = async (req, res) => {
             if (emailExistente) return res.status(409).json({ errorMessage: "Email já cadastrado" });
         }
 
-        if (novoCPF) {
-            const CPFExistente = await Usuario.findOne({ CPF: novoCPF });
-            if (CPFExistente) return res.status(409).json({ errorMessage: "CPF já cadastrado" });
-        }
-
         if (novaSenha) {
             const encryptedPassword = encryptPassword(novaSenha);
             usuario.senha = encryptedPassword;
         }
 
         if (novoEmail) usuario.email = novoEmail;
-        if (novoCPF) usuario.CPF = novoCPF;
         if (novoTelefone) usuario.telefone = novoTelefone;
         if (novoEndereco) usuario.endereco = novoEndereco;
         
