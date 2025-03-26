@@ -150,8 +150,8 @@ export const logarUsuario = async (req, res) => {
         }
         
         const JWT_SECRET = process.env.JWT_SECRET
- 
-        const token = jwt.sign({idUsuario: usuarioEncontrado._id}, JWT_SECRET, { expiresIn: '24h'});
+        //Cria o token de login com duração de 12 horas, contêm apenas o ID do usuário.
+        const token = jwt.sign({idUsuario: usuarioEncontrado._id}, JWT_SECRET, { expiresIn: '12h'});
 
         res.status(200).json({ message: "Login efetuado!", token });
     } catch (error) {

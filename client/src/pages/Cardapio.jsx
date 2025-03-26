@@ -1,9 +1,10 @@
 import React from 'react';
 import ItemList from '../components/ItemList';
-import { cardapioArray } from '../assets/database/cardapioArray.js';
+import { getCardapioArray } from '../assets/database/cardapioArray.js';
 import { Link } from "react-router-dom";
 
 const Cardapio = () => {
+  const cardapioArray = getCardapioArray();
   const entradaArray = cardapioArray.filter(i => i.categoria === "Entrada");
   const pratoPrincipalArray = cardapioArray.filter(i => i.categoria === "Prato principal");
   const bebidaArray = cardapioArray.filter(i => i.categoria === "Bebida");
