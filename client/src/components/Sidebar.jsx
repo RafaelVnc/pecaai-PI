@@ -1,11 +1,27 @@
-import React from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import logo from "../assets/logo.png";
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faUtensils, faClipboard, faStar, faGauge, faChartColumn, faCircleUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from "react";
+import { getNomeEstabelecimento } from "../assets/database/nomeEstabelecimento";
 
 
-const Sidebar = () => {
+const Sidebar = ( ) => {
+  const { logout } = useContext(AuthContext);
+  const [nomeEstabelecimento, setNomeEstabelecimento] = useState("");
+
+  useEffect(() => {
+    const fetchNomeEstabelecimento = async () => {
+      const nome = await getNomeEstabelecimento();
+      setNomeEstabelecimento(nome); // Atualiza o estado com o nome do estabelecimento
+    };
+
+    fetchNomeEstabelecimento();
+  }, []);
+
+
   return (
     <>
       <nav className="sidebar">
@@ -66,14 +82,17 @@ const Sidebar = () => {
             <h3>Relatórios</h3>
           </NavLink>
         </div>
-        <div className='sidebar-end '>
+        <div className='sidebar-end'>
           <div>
             <FontAwesomeIcon icon={faCircleUser} className='sidebar__icons--account' />
-            <h3 className='sidebar__text--account'>Usuário</h3>
-            <a href='/logout' className='sidebar-end__button'>
+            <h3 className='sidebar__text--account'>{nomeEstabelecimento}</h3>
+            <button 
+              className='sidebar-end__button' 
+              onClick={logout} 
+            >
               <FontAwesomeIcon icon={faRightFromBracket} className='sidebar__icons--logout' />
               <h4 className='sidebar__text--logout'>Sair</h4>
-            </a>
+            </button>
           </div>
         </div>
       </nav>

@@ -159,11 +159,21 @@ export const logarUsuario = async (req, res) => {
     }
 }
 
+export const getUsuarioById = async (req, res) => {
+    try{
+        const _id = req.user.idUsuario;
+        const usuario = await Usuario.findOne({ _id }).select("-senha -CPF -_id");
+        res.status(200).json({usuario});
+    } catch (error) {
+        res.status(500).json({ errorMessage: error.message });
+    }
+}
+
 export const atualizarUsuario = async (req, res) => {
     const { senha, novoEmail, novoTelefone, novoEndereco, novoNomeEstabelecimento, novaSenha } = req.body;
 
     try {
-        const _id = req.params.id;
+        const _id = req.user.idUsuario;
 
         const usuario = await Usuario.findOne({ _id })
 

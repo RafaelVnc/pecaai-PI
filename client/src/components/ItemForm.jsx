@@ -53,10 +53,18 @@ const ItemForm = ({
 
     try {
       if (method === "add") {
+        const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+
         const response = await axios.post(
           "http://localhost:8000/cardapio/item",
-          form
+          form,
+          {
+            headers: {
+              Authorization: token, // Adiciona o token no cabeçalho
+            }
+          }
         );
+
         if (response.status === 201) {
           setShowSuccess(true);
         }

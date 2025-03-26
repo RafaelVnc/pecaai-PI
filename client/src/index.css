@@ -120,6 +120,9 @@ body {
   text-decoration: none;
   color: #fff;
   display: flex;
+  background-color: var(--main-color);
+  border: none;
+  cursor: pointer;
 }
 
 .sidebar-end__button:hover{
@@ -192,6 +195,7 @@ body {
 
 .single-item__img img {
   max-width: 240px;
+  max-height: 210px;
   border: 4px solid var(--main-color);
 }
 
@@ -259,6 +263,14 @@ body {
   padding: 2rem;
   max-width: 50rem;
   min-width: 50rem;
+}
+
+/*Resolução 1920x1080*/
+@media (max-width: 1920px){
+  .modal-confirm-delete{
+    left: 41rem;
+    padding:4rem 5rem;
+  }
 }
 
 .modal-confirm-delete__sim-btn{
@@ -360,6 +372,14 @@ body {
   padding: 2rem;
   max-width: 50rem;
   min-width: 50rem;
+}
+
+/*Resolução 1920 x 1080*/
+@media (max-width: 1920px){
+  .success-modal{
+    left: 41rem;
+    padding:4rem 5rem;
+  }
 }
 
 .success-modal button {

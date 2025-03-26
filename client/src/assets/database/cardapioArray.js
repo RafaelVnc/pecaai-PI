@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Função para obter o token do localStorage 
 const getAuthToken = () => {
-    return localStorage.getItem("token"); 
+    return localStorage.getItem("Authorization"); 
 };
 
 // Função assíncrona para buscar o cardápio com autenticação JWT
@@ -15,7 +15,7 @@ export const getCardapioArray = async () => {
 
         const response = await axios.get("http://localhost:8000/cardapio", {
             headers: {
-                Authorization: `Bearer ${token}`, // Adiciona o token JWT no cabeçalho
+                Authorization: token, // Adiciona o token JWT no cabeçalho
             },
         });
 
