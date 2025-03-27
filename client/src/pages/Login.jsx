@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
 import axios from "axios";
+import logo from "../assets/logo.png"
 
 const Login = () => {
     const { login } = useContext(AuthContext);
@@ -23,14 +24,16 @@ const Login = () => {
     };
 
     return (
-        <div style={{ textAlign: "center", marginTop: "50px" }}>
+        <div className="login-form">
+            <img src={logo} />
             <h2>Login</h2>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleLogin} className="login-form__form">
                 <input 
                     type="email" 
                     placeholder="Email" 
                     value={email} 
                     onChange={(e) => setEmail(e.target.value)} 
+                    className="login-form__input login-form__input--email"
                     required
                 />
                 <br />
@@ -38,11 +41,13 @@ const Login = () => {
                     type="password" 
                     placeholder="Senha" 
                     value={senha} 
-                    onChange={(e) => setSenha(e.target.value)} 
+                    onChange={(e) => setSenha(e.target.value)}
+                    className="login-form__input login-form__input--senha" 
                     required
                 />
                 <br />
-                <button type="submit">Entrar</button>
+                <button type="submit" className="login-form__btn">Entrar</button>
+                <Link to="/cadastroEstabelecimento" className="login-form__cadastro-link">Cadastro</Link>
             </form>
         </div>
     );
