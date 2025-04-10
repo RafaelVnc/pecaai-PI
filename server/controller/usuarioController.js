@@ -59,7 +59,7 @@ const validaCPF = (cpf) => {
 
 export const cadastrarUsuarioEstabelecimento = async (req, res) => {
     try {
-        const { email, CPF, senha, telefone, endereco, nomeEstabelecimento } = req.body;
+        const { email, CPF, senha, telefone, endereco, nomeEstabelecimento, aceite } = req.body;
         const tipo = "Estabelecimento"
         
         const emailEncontrado = await Usuario.findOne({ email });
@@ -76,7 +76,21 @@ export const cadastrarUsuarioEstabelecimento = async (req, res) => {
                 errorMessage: "CPF inválido!"
             });
         }
+
+        if (aceite != true){
+            return res.status(401).json({
+                errorMessage: "Deve aceitar os Termos de Serviço."
+            });
+        }
         
+        const aceiteString = {
+            user_CPF: CPF,
+            versao_Termo: "1.0",
+            termo_aceito: aceite,
+            aceito_em_ISO: new Date().toISOString(),
+            aceito_em_BRTime: new Date().toLocaleString()
+        };
+
         const encryptedPassword = encryptPassword(senha);
 
         const newUser = new Usuario({
@@ -86,7 +100,8 @@ export const cadastrarUsuarioEstabelecimento = async (req, res) => {
           telefone,
           endereco,
           nomeEstabelecimento,
-          tipo: tipo
+          tipo: tipo,
+          aceite: aceiteString
         });
     
         await newUser.save();

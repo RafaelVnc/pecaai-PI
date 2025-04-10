@@ -26,6 +26,9 @@ const usuarioSchema = new mongoose.Schema({
   },
   tipo:{
     type:String
+  },
+  aceite:{
+    type:Object
   }
 });
 
