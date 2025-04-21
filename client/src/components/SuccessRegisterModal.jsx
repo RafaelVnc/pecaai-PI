@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 
 const SuccessRegisterModal = () => {
   return (
-    <div>
-      <h1>Cadastro realizado com Sucesso!</h1>
-      <Link to={"/login"}>Ok!</Link>
+    <div className='modal__bkground-success'>
+      <div className='cadastro__success-modal'>
+        <h1>Cadastro realizado com Sucesso!</h1>
+        <Link to={"/login"}>Ok!</Link>
+      </div>
     </div>
   )
 }

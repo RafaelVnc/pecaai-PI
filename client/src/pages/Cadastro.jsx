@@ -36,13 +36,13 @@ const Cadastro = () => {
         <img src={logo} />
         <h2>Cadastre-se já!</h2>
         <p>Basta fornecer os dados solicitados e concordar com nossos termos de serviço!</p>
-        <form onSubmit={handleCadastro} className="">
+        <form onSubmit={handleCadastro} className="cadastro-form__form">
                 <input 
                     type="email" 
                     placeholder="Email" 
                     value={email} 
                     onChange={(e) => setEmail(e.target.value)} 
-                    className=""
+                    className="cadastro-form__input"
                     required
                 />
                 <br />
@@ -51,7 +51,7 @@ const Cadastro = () => {
                     placeholder="Senha" 
                     value={senha} 
                     onChange={(e) => setSenha(e.target.value)}
-                    className="" 
+                    className="cadastro-form__input" 
                     required
                 />
                 <br />
@@ -60,7 +60,7 @@ const Cadastro = () => {
                     placeholder="CPF ex: 12345678910" 
                     value={CPF} 
                     onChange={(e) => setCPF(e.target.value)}
-                    className="" 
+                    className="cadastro-form__input" 
                     required
                 />
                 <br />
@@ -69,7 +69,7 @@ const Cadastro = () => {
                     placeholder="Telefone ex: DDD 99999-9999" 
                     value={telefone} 
                     onChange={(e) => setTelefone(e.target.value)}
-                    className="" 
+                    className="cadastro-form__input" 
                     required
                 />
                 <br />
@@ -78,7 +78,7 @@ const Cadastro = () => {
                     placeholder="Endereço" 
                     value={endereco} 
                     onChange={(e) => setEndereco(e.target.value)}
-                    className="" 
+                    className="cadastro-form__input" 
                     required
                 />
                 <br />
@@ -87,22 +87,24 @@ const Cadastro = () => {
                     placeholder="Nome do estabelecimento" 
                     value={nomeEstabelecimento} 
                     onChange={(e) => setNomeEstabelecimento(e.target.value)}
-                    className="" 
+                    className="cadastro-form__input" 
                     required
                 />
                 <br />
-                <input 
-                    type="checkbox" 
-                    id='aceite'
-                    checked={aceite}
-                    onChange={() => setAceite(!aceite)}
-                    className="" 
-                    required
-                />
-                <label htmlFor="aceite">Concordo com os <button onClick={() => setTermosModal(true)}>Termos de Serviço</button></label>
+                <div className='cadastro-form__input--checkbox-div'>
+                  <input 
+                      type="checkbox" 
+                      id='aceite'
+                      checked={aceite}
+                      onChange={() => setAceite(!aceite)}
+                      className="cadastro-form__input--checkbox" 
+                      required
+                  />
+                  <label htmlFor="aceite">Concordo com os <button onClick={() => setTermosModal(true)}>Termos de Serviço</button></label>
+                </div>
                 <br />
-                <button type="submit" className="">Cadastrar</button>
-                <Link to="/login" className="">Já tem conta? Login</Link>
+                <button type="submit" className="cadastro-form__btn">Cadastrar</button>
+                <Link to="/login" className="cadastro-form__link-login">Já tem conta? Login</Link>
           </form>
 
           {showTermosModal && (
