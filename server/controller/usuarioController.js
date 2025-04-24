@@ -161,7 +161,7 @@ export const logarUsuario = async (req, res) => {
         if (!usuarioEncontrado) return res.status(404).json({ errorMessage: "Credenciais incorretas." });
 
         if (senha !== decryptPassword(usuarioEncontrado.senha)) {
-            return res.status(401).json({ error: "Credenciais incorretas." });
+            return res.status(401).json({ errorMessage: "Credenciais incorretas." });
         }
         
         const JWT_SECRET = process.env.JWT_SECRET

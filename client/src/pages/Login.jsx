@@ -19,7 +19,7 @@ const Login = () => {
                 login(response.data.token);
             }
         } catch (error) {
-            alert("Erro ao fazer login: " + (error.response?.data?.message || error.message));
+            alert("Erro ao fazer login: " + (error.response?.data?.errorMessage || error.errorMessage));
         }
     };
 

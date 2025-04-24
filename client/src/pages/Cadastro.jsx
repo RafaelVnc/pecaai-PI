@@ -27,7 +27,7 @@ const Cadastro = () => {
               setSuccessModal(true);
             }
         } catch (error) {
-            alert("Erro ao fazer Cadastro: " + (error.response?.data?.message || error.message));
+            alert("Erro ao fazer Cadastro: " + (error.response?.data?.errorMessage || error.errorMessage));
         }
   }
 
