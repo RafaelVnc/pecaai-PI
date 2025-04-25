@@ -12,6 +12,7 @@ import Dashboard from "./pages/Dashboard";
 import Relatorios from "./pages/Relatorios";
 import ItemAdd from "./pages/ItemAdd";
 import ItemEdit from "./pages/ItemEdit";
+import Landing from "./pages/Landing";
 
 
 const App = () => {
@@ -21,7 +22,8 @@ const App = () => {
       <AuthProvider>
         <Routes>
           {/* Rota de Login e Cadastro Pública */}
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/loginEstabelecimento" element={<Login />} />
           <Route path="/cadastroEstabelecimento" element={<Cadastro />} />
 
           {/* Rotas Protegidas */}
@@ -31,7 +33,7 @@ const App = () => {
               <PrivateRoute>
                 <Sidebar />
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/home" element={<Home />} />
                   <Route path="/cardapio" element={<Cardapio />} />
                   <Route path="/pedidos" element={<Pedidos />} />
                   <Route path="/avaliacoes" element={<Avaliacoes />} />

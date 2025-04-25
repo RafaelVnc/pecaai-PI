@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
               if (!isExpired) {
                   setUser(token);
               } else {
-                  navigate("/login");
+                  navigate("/loginEstabelecimento");
               }
           } catch (error) {
               console.error("Erro ao decodificar o token", error);
@@ -36,13 +36,13 @@ export const AuthProvider = ({ children }) => {
     const login = (token) => {
         localStorage.setItem("Authorization", `Bearer ${token}`);
         setUser(token);
-        navigate("/");
+        navigate("/home");
     };
 
     const logout = () => {
         localStorage.removeItem("Authorization");
         setUser(null);
-        navigate("/login");
+        navigate("/loginEstabelecimento");
     };
 
     if (loading) {

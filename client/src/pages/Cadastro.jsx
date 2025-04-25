@@ -104,7 +104,7 @@ const Cadastro = () => {
                 </div>
                 <br />
                 <button type="submit" className="cadastro-form__btn">Cadastrar</button>
-                <Link to="/login" className="cadastro-form__link-login">Já tem conta? Login</Link>
+                <Link to="/loginEstabelecimento" className="cadastro-form__link-login">Já tem conta? Login</Link>
           </form>
 
           {showTermosModal && (

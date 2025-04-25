@@ -6,7 +6,7 @@ const SuccessRegisterModal = () => {
     <div className='modal__bkground-success'>
       <div className='cadastro__success-modal'>
         <h1>Cadastro realizado com Sucesso!</h1>
-        <Link to={"/login"}>Ok!</Link>
+        <Link to={"/loginEstabelecimento"}>Ok!</Link>
       </div>
     </div>
   )

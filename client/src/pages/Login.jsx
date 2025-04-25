@@ -2,7 +2,10 @@ import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
 import axios from "axios";
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+
 
 const Login = () => {
     const { login } = useContext(AuthContext);
@@ -25,6 +28,7 @@ const Login = () => {
 
     return (
         <div className="login-form">
+                <Link to={"/"} className="login__back-btn"><FontAwesomeIcon icon={faArrowLeft} /> Voltar</Link>
             <img src={logo} />
             <h2>Login</h2>
             <form onSubmit={handleLogin} className="login-form__form">

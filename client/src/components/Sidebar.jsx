@@ -30,7 +30,7 @@ const Sidebar = ( ) => {
         </div>
         <div className="sidebar__item">
           <NavLink 
-            to="/" 
+            to="/home" 
             className={({ isActive }) => (isActive ? "sidebar__text--link active" : "sidebar__text--link")}
           >
             <FontAwesomeIcon icon={faHouse} className='sidebar__icons' />
