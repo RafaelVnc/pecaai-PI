@@ -1,18 +1,23 @@
 import React from 'react'
-import { Link } from "react-router-dom";
-import logo from "../assets/logo.png";
-
+import HeaderTop from '../components/HeaderTop'
+import SearchInput from '../components/SearchInput';
+import EstablishmentList from '../components/EstablishmentList';
 
 const Landing = () => {
   return (
-    <div className='landing'>
-      <img src={logo} className='landing__logo'/>
-      <div className='landing__btns'>
-        <Link to={"/loginCliente"}>Sou Cliente</Link>
-        <Link to={"/loginEstabelecimento"}>Sou Estabelecimento</Link>
+    <>
+      <HeaderTop />
+      <div className='landing__main-container'>
+        <div className='landing__search-wrapper'>
+          <SearchInput />
+        </div>
+        <div className='landing__left-content'>
+          <h1 className="landing__titles">Principais estabelecimentos</h1>
+        </div>
+          <EstablishmentList />
       </div>
-    </div>
+    </>
   )
 }
 
-export default Landing
+export default Landing;
