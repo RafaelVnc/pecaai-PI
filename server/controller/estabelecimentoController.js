@@ -55,7 +55,7 @@ const validaCPF = (cpf) => {
     if (resto !== parseInt(cpf.charAt(10))) return false;
 
     return true;
-}
+};
 
 export const cadastrarEstabelecimento = async (req, res) => {
     try {
@@ -109,7 +109,7 @@ export const cadastrarEstabelecimento = async (req, res) => {
     } catch (error) {
         res.status(500).json({ errorMessage: error.message });
     }
-}
+};
 
 /*export const cadastrarUsuarioCliente = async (req, res) => {
     try {
@@ -172,7 +172,7 @@ export const logarEstabelecimento = async (req, res) => {
     } catch (error) {
         res.status(500).json({ errorMessage: error.message });
     }
-}
+};
 
 export const getEstabelecimentoById = async (req, res) => {
     try{
@@ -182,7 +182,16 @@ export const getEstabelecimentoById = async (req, res) => {
     } catch (error) {
         res.status(500).json({ errorMessage: error.message });
     }
-}
+};
+
+export const getEstabelecimentoLanding = async (req, res) => {
+    try {
+        const estabelecimentos = await Estabelecimento.find({}, 'nomeEstabelecimento endereco telefone');
+        res.status(200).json(estabelecimentos);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao buscar estabelecimentos", error: error.message });
+    }
+};
 
 export const atualizarEstabelecimento = async (req, res) => {
     const { senha, novoEmail, novoTelefone, novoEndereco, novoNomeEstabelecimento, novaSenha } = req.body;
