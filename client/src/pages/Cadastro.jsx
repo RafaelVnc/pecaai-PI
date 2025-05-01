@@ -21,7 +21,7 @@ const Cadastro = () => {
     e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8000/usuario/cadastroEstabelecimento", { email, senha, CPF, telefone, endereco, nomeEstabelecimento, aceite });
+            const response = await axios.post("http://localhost:8000/estabelecimento/cadastroEstabelecimento", { email, senha, CPF, telefone, endereco, nomeEstabelecimento, aceite });
 
             if (response.status === 201){
               setSuccessModal(true);

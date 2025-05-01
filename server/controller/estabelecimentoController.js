@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import forge from "node-forge";
-import Usuario from "../model/usuarioModel.js";
+import Estabelecimento from "../model/estabelecimentoModel.js";
 import { publicKey, privateKey } from '../config/keys.js';
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -57,13 +57,13 @@ const validaCPF = (cpf) => {
     return true;
 }
 
-export const cadastrarUsuarioEstabelecimento = async (req, res) => {
+export const cadastrarEstabelecimento = async (req, res) => {
     try {
         const { email, CPF, senha, telefone, endereco, nomeEstabelecimento, aceite } = req.body;
         const tipo = "Estabelecimento"
         
-        const emailEncontrado = await Usuario.findOne({ email });
-        const CPFEncontrado = await Usuario.findOne({ CPF });
+        const emailEncontrado = await Estabelecimento.findOne({ email });
+        const CPFEncontrado = await Estabelecimento.findOne({ CPF });
 
         if (emailEncontrado) {
             return res.status(409).json({ errorMessage: "Email já cadastrado" });
@@ -93,7 +93,7 @@ export const cadastrarUsuarioEstabelecimento = async (req, res) => {
 
         const encryptedPassword = encryptPassword(senha);
 
-        const newUser = new Usuario({
+        const newUser = new Estabelecimento({
           email,
           CPF,
           senha: encryptedPassword, 
@@ -111,7 +111,7 @@ export const cadastrarUsuarioEstabelecimento = async (req, res) => {
     }
 }
 
-export const cadastrarUsuarioCliente = async (req, res) => {
+/*export const cadastrarUsuarioCliente = async (req, res) => {
     try {
         const { email, CPF, senha, telefone, endereco } = req.body;
         const tipo = "Cliente"
@@ -147,9 +147,9 @@ export const cadastrarUsuarioCliente = async (req, res) => {
     } catch (error) {
         res.status(500).json({ errorMessage: error.message });
     }
-}
+}*/
 
-export const logarUsuario = async (req, res) => {
+export const logarEstabelecimento = async (req, res) => {
     try {
         const { email, senha } = req.body;
 
@@ -157,16 +157,16 @@ export const logarUsuario = async (req, res) => {
             return res.status(400).json({ errorMessage: "Email e senha são obrigatórios" });
         }
 
-        const usuarioEncontrado = await Usuario.findOne({ email });
-        if (!usuarioEncontrado) return res.status(404).json({ errorMessage: "Credenciais incorretas." });
+        const estabelecimentoEncontrado = await Estabelecimento.findOne({ email });
+        if (!estabelecimentoEncontrado) return res.status(404).json({ errorMessage: "Credenciais incorretas." });
 
-        if (senha !== decryptPassword(usuarioEncontrado.senha)) {
+        if (senha !== decryptPassword(estabelecimentoEncontrado.senha)) {
             return res.status(401).json({ errorMessage: "Credenciais incorretas." });
         }
         
         const JWT_SECRET = process.env.JWT_SECRET
         //Cria o token de login com duração de 12 horas, contêm apenas o ID do usuário.
-        const token = jwt.sign({idUsuario: usuarioEncontrado._id}, JWT_SECRET, { expiresIn: '12h'});
+        const token = jwt.sign({idEstabelecimento: estabelecimentoEncontrado._id}, JWT_SECRET, { expiresIn: '12h'});
 
         res.status(200).json({ message: "Login efetuado!", token });
     } catch (error) {
@@ -174,45 +174,45 @@ export const logarUsuario = async (req, res) => {
     }
 }
 
-export const getUsuarioById = async (req, res) => {
+export const getEstabelecimentoById = async (req, res) => {
     try{
-        const _id = req.user.idUsuario;
-        const usuario = await Usuario.findOne({ _id }).select("-senha -CPF -_id");
-        res.status(200).json({usuario});
+        const _id = req.user.idEstabelecimento;
+        const estabelecimento = await Estabelecimento.findOne({ _id }).select("-senha -CPF -_id");
+        res.status(200).json({estabelecimento});
     } catch (error) {
         res.status(500).json({ errorMessage: error.message });
     }
 }
 
-export const atualizarUsuario = async (req, res) => {
+export const atualizarEstabelecimento = async (req, res) => {
     const { senha, novoEmail, novoTelefone, novoEndereco, novoNomeEstabelecimento, novaSenha } = req.body;
 
     try {
-        const _id = req.user.idUsuario;
+        const _id = req.user.idEstabelecimento;
 
-        const usuario = await Usuario.findOne({ _id })
+        const estabelecimento = await Estabelecimento.findOne({ _id })
 
-        if (senha !== decryptPassword(usuarioEncontrado.senha)) {
+        if (senha !== decryptPassword(estabelecimentoEncontrado.senha)) {
             return res.status(401).json({ error: "Credenciais incorretas." });
         }
 
-        if (novoEmail && novoEmail !== usuario.email) {
-            const emailExistente = await Usuario.findOne({ email: novoEmail });
+        if (novoEmail && novoEmail !== estabelecimento.email) {
+            const emailExistente = await Estabelecimento.findOne({ email: novoEmail });
             if (emailExistente) return res.status(409).json({ errorMessage: "Email já cadastrado" });
         }
 
         if (novaSenha) {
             const encryptedPassword = encryptPassword(novaSenha);
-            usuario.senha = encryptedPassword;
+            estabelecimento.senha = encryptedPassword;
         }
 
-        if (novoEmail) usuario.email = novoEmail;
-        if (novoTelefone) usuario.telefone = novoTelefone;
-        if (novoEndereco) usuario.endereco = novoEndereco;
+        if (novoEmail) estabelecimento.email = novoEmail;
+        if (novoTelefone) estabelecimento.telefone = novoTelefone;
+        if (novoEndereco) estabelecimento.endereco = novoEndereco;
         
-        if (usuario.tipo == "Estabelecimento" && novoNomeEstabelecimento) usuario.nomeEstabelecimento = novoNomeEstabelecimento;
+        if (estabelecimento.tipo == "Estabelecimento" && novoNomeEstabelecimento) estabelecimento.nomeEstabelecimento = novoNomeEstabelecimento;
 
-        await usuario.save();
+        await estabelecimento.save();
 
         res.status(200).json({ message: "Usuário atualizado com sucesso!" });
     } catch (error) {

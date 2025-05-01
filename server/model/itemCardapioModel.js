@@ -29,9 +29,9 @@ const itemCardapioSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  idUsuario:{
+  idEstabelecimento:{
     type:mongoose.Schema.Types.ObjectId,
-    ref: 'Usuario',
+    ref: 'Estabelecimento',
     required: true
   }
 });

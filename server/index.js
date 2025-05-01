@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from "cors";
 import routeCardapio from "./routes/cardapioRoute.js";
-import routeUser from "./routes/userRoute.js";
+import routeEstabelecimento from "./routes/estabelecimentoRoute.js";
 
 const app = express();
 app.use(bodyParser.json());
@@ -28,4 +28,4 @@ mongoose
 app.use("/uploads", express.static("uploads"));
 
 app.use("/cardapio", routeCardapio);
-app.use("/usuario", routeUser)
+app.use("/estabelecimento", routeEstabelecimento);

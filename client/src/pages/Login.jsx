@@ -16,7 +16,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8000/usuario/login", { email, senha });
+            const response = await axios.post("http://localhost:8000/estabelecimento/login", { email, senha });
 
             if (response.data.token) {
                 login(response.data.token);

@@ -4,7 +4,7 @@ import itemCardapio from "../model/itemCardapioModel.js";
 
 export const adicionarItem = async (req, res) => {
   try {
-    const idUsuario = req.user.idUsuario;
+    const idEstabelecimento = req.user.idEstabelecimento;
     const { name, descricao, preco, categoria } = req.body;
     const ativo = true;
     const quantidadeVendida = 0;
@@ -18,7 +18,7 @@ export const adicionarItem = async (req, res) => {
       ativo,
       categoria,
       quantidadeVendida, 
-      idUsuario
+      idEstabelecimento
     });
 
     const savedData = await newItem.save();
@@ -113,8 +113,8 @@ export const deleteItem = async(req, res) => {
 
 export const getItensByUserId = async (req, res) => {
   try {
-    const idUsuario = req.user.idUsuario; // Pegando o idUsuario do token (req.user vem do middleware JWT)
-    const itens = await itemCardapio.find({ idUsuario });
+    const idEstabelecimento = req.user.idEstabelecimento; // Pegando o idEstabelecimento do token (req.user vem do middleware JWT)
+    const itens = await itemCardapio.find({ idEstabelecimento });
 
     if (itens.length === 0) {
       return res.status(404).json({ errorMessage: "Nenhum item encontrado para este usuário" });
