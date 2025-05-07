@@ -17,8 +17,13 @@ const SingleItem = ({
   preco,
   fotoURL,
   ativo: initialAtivo,
+  isEstabelecimento
 }) => {
   const [ativo, setAtivo] = useState(initialAtivo);
+
+  if (!isEstabelecimento && !ativo) {
+    return null;
+  }
 
   const toggleAtivo = async () => {
     try {
@@ -50,27 +55,29 @@ const SingleItem = ({
         <p>{descricao}</p>
         <h3>{`R$ ${preco.toFixed(2)}`}</h3>
       </div>
-      <div className="single-item__ativo-btn">
-        <button onClick={toggleAtivo}>
-          {ativo ? (
-            <FontAwesomeIcon icon={faToggleOn} />
-          ) : (
-            <FontAwesomeIcon icon={faToggleOff} />
-          )}
-        </button>
-      </div>
-      <div className="single-item__edit">
-        <Link to={`/itemEdit/${_id}`}>
-          {" "}
-          <FontAwesomeIcon icon={faPenToSquare} /> Editar item{" "}
-        </Link>
-      </div>
-      <div className="single-item__delete">
-        <button onClick={() => setShowDeleteModal(true)}>
-          {" "}
-          <FontAwesomeIcon icon={faTrashCan} /> Excluir item{" "}
-        </button>
-      </div>
+      {isEstabelecimento && (
+        <>
+          <div className="single-item__ativo-btn">
+            <button onClick={toggleAtivo}>
+              {ativo ? (
+                <FontAwesomeIcon icon={faToggleOn} />
+              ) : (
+                <FontAwesomeIcon icon={faToggleOff} />
+              )}
+            </button>
+          </div>
+          <div className="single-item__edit">
+            <Link to={`/itemEdit/${_id}`}>
+              <FontAwesomeIcon icon={faPenToSquare} /> Editar item
+            </Link>
+          </div>
+          <div className="single-item__delete">
+            <button onClick={() => setShowDeleteModal(true)}>
+              <FontAwesomeIcon icon={faTrashCan} /> Excluir item
+            </button>
+          </div>
+        </>
+      )}
 
       {showDeleteModal && (
         <ConfirmDelete

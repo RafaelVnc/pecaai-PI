@@ -1,0 +1,127 @@
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { getCardapioByIdEstabelecimento } from '../assets/database/cardapioArray';
+import { getEstabelecimentoArray } from '../assets/database/estabelecimentoArray';
+import HeaderTop from '../components/HeaderTop';
+import ItemList from '../components/ItemList';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+
+
+const generateColorFromString = (str) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = '#';
+  for (let i = 0; i < 3; i++) {
+    const value = (hash >> (i * 8)) & 0xFF;
+    color += (`00${value.toString(16)}`).slice(-2);
+  }
+  return color;
+};
+
+const formatarTelefone = (telefone) => {
+  if (!telefone) return '';
+
+  const cleaned = telefone.replace(/\D/g, ''); // remove tudo que não é número
+
+  if (cleaned.length === 11) {
+    // Formato: (99) 9XXXX-XXXX
+    return cleaned.replace(/^(\d{2})(\d{1})(\d{4})(\d{4})$/, '($1) $2$3-$4');
+  } else if (cleaned.length === 10) {
+    // Formato: (99) XXXX-XXXX (sem o 9 inicial)
+    return cleaned.replace(/^(\d{2})(\d{4})(\d{4})$/, '($1) $2-$3');
+  } else {
+    // Caso o número seja inválido ou incompleto
+    return telefone;
+  }
+};
+
+const Estabelecimento = () => {
+  const { id } = useParams();
+  const [estabelecimento, setEstabelecimento] = useState([]);
+    
+    useEffect(() => {
+      const fetchData = async () => {
+        const data = await getEstabelecimentoArray();
+        setEstabelecimento(data.find((item) => String(item._id) === String(id)));
+      };
+    
+      fetchData();
+    }, [id]);
+  
+  const [cardapioArray, setCardapioArray] = useState([]);
+    
+      useEffect(() => {
+        const fetchData = async () => {
+          const data = await getCardapioByIdEstabelecimento(id);
+          setCardapioArray(data);
+        };
+    
+        fetchData();
+      }, []);
+
+  const [mediaPreco, setMediaPreco] = useState(0);
+
+      useEffect(() => {
+        if (cardapioArray.length > 0) {
+          const total = cardapioArray.reduce((acc, item) => acc + item.preco, 0);
+          const media = total / cardapioArray.length;
+          setMediaPreco(media);
+        }
+      }, [cardapioArray]);
+  
+  const color = generateColorFromString(estabelecimento.nomeEstabelecimento || '');
+  const entradaArray = cardapioArray.filter(i => i.categoria === "Entrada");
+  const pratoPrincipalArray = cardapioArray.filter(i => i.categoria === "Prato principal");
+  const bebidaArray = cardapioArray.filter(i => i.categoria === "Bebida");
+  const sobremesaArray = cardapioArray.filter(i => i.categoria === "Sobremesa");
+  
+  if (!estabelecimento || !estabelecimento.nomeEstabelecimento) {
+    return <p>Carregando estabelecimento...</p>;
+  }
+
+  return (
+    <>
+      <HeaderTop />
+      <div className='establishment-page__main-container'>
+        <Link to={"/"} className="establishment-page__back-btn"><FontAwesomeIcon icon={faArrowLeft} /> Voltar</Link>
+        <div className='establishment-page__info'>
+            <h2 
+            className='establishment-page__icon' 
+            style={{ backgroundColor: color}}
+            >
+              {(estabelecimento.nomeEstabelecimento).charAt(0)}
+            </h2>
+          <div className='establishment-page__info-left'>
+            <h1>{estabelecimento.nomeEstabelecimento}</h1>
+            <p><FontAwesomeIcon icon={faWhatsapp} /> {formatarTelefone(estabelecimento.telefone)}</p>
+            <p>{estabelecimento.endereco}</p>
+          </div>
+          <div className='establishment-page__info-right'>
+            <p className='establishment-page__info-star'><FontAwesomeIcon icon={faStar} /> <FontAwesomeIcon icon={faStar} /> <FontAwesomeIcon icon={faStar} /> <FontAwesomeIcon icon={faStar} /></p>
+            <p>Média de preço: R${mediaPreco.toFixed(2)}</p>
+          </div>
+        </div>
+        <h3 className='establishment-page__titles'>Cardápio</h3>
+        {
+          cardapioArray.length > 0 ? (
+            <div className='establishment-page__cardapio'>
+              <ItemList categoria="Entrada" itensArray={entradaArray} isEstabelecimento={false}/>
+              <ItemList categoria="Prato principal" itensArray={pratoPrincipalArray} isEstabelecimento={false}/>
+              <ItemList categoria="Bebida" itensArray={bebidaArray} isEstabelecimento={false}/>
+              <ItemList categoria="Sobremesa" itensArray={sobremesaArray} isEstabelecimento={false}/>
+            </div>
+          ) : (
+            <p style={{ marginTop: '5rem', fontStyle: 'italic', fontSize:'1.7rem' , paddingBottom: '10rem', display:'flex', alignContent:'center', justifyContent:'center' }}>Nenhum item no cardápio deste estabelecimento!</p>
+          )
+        }
+      </div>
+    </>
+  );
+}
+
+export default Estabelecimento;

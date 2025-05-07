@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import HeaderTop from '../components/HeaderTop'
+import HeaderTop from '../components/HeaderTop';
 import SearchInput from '../components/SearchInput';
 import EstablishmentList from '../components/EstablishmentList';
 import { getEstabelecimentoArray } from '../assets/database/estabelecimentoArray';

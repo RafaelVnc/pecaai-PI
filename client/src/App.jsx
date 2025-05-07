@@ -13,6 +13,7 @@ import Relatorios from "./pages/Relatorios";
 import ItemAdd from "./pages/ItemAdd";
 import ItemEdit from "./pages/ItemEdit";
 import Landing from "./pages/Landing";
+import Estabelecimento from "./pages/Estabelecimento";
 
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
         <Routes>
           {/* Rota de Login e Cadastro Pública */}
           <Route path="/" element={<Landing />} />
+          <Route path="/estabelecimento/:id" element={<Estabelecimento />} />
           <Route path="/loginEstabelecimento" element={<Login />} />
           <Route path="/cadastroEstabelecimento" element={<Cadastro />} />
 

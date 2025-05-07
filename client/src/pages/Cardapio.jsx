@@ -22,10 +22,10 @@ const Cardapio = () => {
 
   return (
     <div className='main'>
-      <ItemList categoria="Entrada" itensArray={entradaArray}/>
-      <ItemList categoria="Prato principal" itensArray={pratoPrincipalArray}/>
-      <ItemList categoria="Bebida" itensArray={bebidaArray}/>
-      <ItemList categoria="Sobremesa" itensArray={sobremesaArray}/>
+      <ItemList categoria="Entrada" itensArray={entradaArray} isEstabelecimento={true}/>
+      <ItemList categoria="Prato principal" itensArray={pratoPrincipalArray} isEstabelecimento={true}/>
+      <ItemList categoria="Bebida" itensArray={bebidaArray} isEstabelecimento={true}/>
+      <ItemList categoria="Sobremesa" itensArray={sobremesaArray} isEstabelecimento={true}/>
       
       <div className='cardapio__add-btn'>
         <Link to="/itemAdd"> + Adicionar item </Link>

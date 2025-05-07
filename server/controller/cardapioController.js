@@ -48,6 +48,22 @@ export const getItemById = async(req, res) => {
   }
 };
 
+export const getItensByIdEstabelecimento = async (req, res) => {
+  try {
+    const idEstabelecimento = req.params.id;
+
+    const itens = await itemCardapio.find({ idEstabelecimento });
+
+    if (itens.length === 0) {
+      return res.status(404).json({ message: "Este estabelecimento ainda não tem nenhum item." });
+    }
+
+    res.status(200).json(itens);
+  } catch (error) {
+    res.status(500).json({ errorMessage: error.message });
+  }
+};
+
 export const updateItem = async(req, res) => {
   try {
     const id = req.params.id;
