@@ -2,7 +2,7 @@ import React from 'react';
 import SingleItem from './SingleItem';
 
 
-const ItemList = ({ categoria, itensArray, isEstabelecimento }) => {
+const ItemList = ({ categoria, itensArray, isEstabelecimento, onAddItem }) => {
   const finalItems = Infinity;
   
   return (
@@ -22,7 +22,7 @@ const ItemList = ({ categoria, itensArray, isEstabelecimento }) => {
           .filter((currentValue, index) => index < finalItems)
           .map((currObj, index) => (
           <SingleItem 
-          {...currObj} isEstabelecimento={isEstabelecimento}
+          {...currObj} isEstabelecimento={isEstabelecimento} onAddItem={onAddItem}
           key={`${categoria}-${index}`} />
         ))}
       </div>

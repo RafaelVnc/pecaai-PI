@@ -17,13 +17,20 @@ const SingleItem = ({
   preco,
   fotoURL,
   ativo: initialAtivo,
-  isEstabelecimento
+  isEstabelecimento,
+  onAddItem
 }) => {
   const [ativo, setAtivo] = useState(initialAtivo);
 
   if (!isEstabelecimento && !ativo) {
     return null;
   }
+
+  const handleAdicionar = () => {
+    if (onAddItem) {
+      onAddItem({ _id, nome: name, preco });
+    }
+  };
 
   const toggleAtivo = async () => {
     try {
@@ -55,6 +62,13 @@ const SingleItem = ({
         <p>{descricao}</p>
         <h3>{`R$ ${preco.toFixed(2)}`}</h3>
       </div>
+      
+      {!isEstabelecimento && (
+        <div className="single-item__add">
+          <button onClick={handleAdicionar} className="establishment-page__pedido-adicionar-btn">Adicionar 1</button>
+        </div>
+      )}
+
       {isEstabelecimento && (
         <>
           <div className="single-item__ativo-btn">

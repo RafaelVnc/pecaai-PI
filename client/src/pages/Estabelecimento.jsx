@@ -74,6 +74,43 @@ const Estabelecimento = () => {
         }
       }, [cardapioArray]);
   
+      const [listaPedido, setListaPedido] = useState([]);
+
+      const adicionarAoPedido = (item) => {
+        setListaPedido((prevLista) => {
+          const existente = prevLista.find((i) => i._id === item._id);
+          if (existente) {
+            return prevLista.map((i) =>
+              i._id === item._id
+                ? { ...i, quantidade: i.quantidade + 1, subtotal: (i.quantidade + 1) * i.preco }
+                : i
+            );
+          } else {
+            return [...prevLista, { ...item, quantidade: 1, subtotal: item.preco }];
+          }
+        });
+      };
+      
+  const precoTotal = listaPedido.reduce((acc, item) => acc + item.subtotal, 0);
+  
+  const removerItem = (id) => {
+    setListaPedido((prev) =>
+      prev
+        .map((item) => {
+          if (item._id === id) {
+            const novaQuantidade = item.quantidade - 1;
+            if (novaQuantidade <= 0) return null;
+            return {
+              ...item,
+              quantidade: novaQuantidade,
+              subtotal: novaQuantidade * item.preco,
+            };
+          }
+          return item;
+        })
+        .filter(Boolean)
+    );
+  };
   const color = generateColorFromString(estabelecimento.nomeEstabelecimento || '');
   const entradaArray = cardapioArray.filter(i => i.categoria === "Entrada");
   const pratoPrincipalArray = cardapioArray.filter(i => i.categoria === "Prato principal");
@@ -110,10 +147,22 @@ const Estabelecimento = () => {
         {
           cardapioArray.length > 0 ? (
             <div className='establishment-page__cardapio'>
-              <ItemList categoria="Entrada" itensArray={entradaArray} isEstabelecimento={false}/>
-              <ItemList categoria="Prato principal" itensArray={pratoPrincipalArray} isEstabelecimento={false}/>
-              <ItemList categoria="Bebida" itensArray={bebidaArray} isEstabelecimento={false}/>
-              <ItemList categoria="Sobremesa" itensArray={sobremesaArray} isEstabelecimento={false}/>
+              <ItemList categoria="Entrada" itensArray={entradaArray} isEstabelecimento={false} onAddItem={adicionarAoPedido}/>
+              <ItemList categoria="Prato principal" itensArray={pratoPrincipalArray} isEstabelecimento={false} onAddItem={adicionarAoPedido}/>
+              <ItemList categoria="Bebida" itensArray={bebidaArray} isEstabelecimento={false} onAddItem={adicionarAoPedido}/>
+              <ItemList categoria="Sobremesa" itensArray={sobremesaArray} isEstabelecimento={false} onAddItem={adicionarAoPedido}/>
+              <h3 className="establishment-page__titles--full-width">Pedido</h3>
+              <ul className='establishment-page__pedido-list'>
+                {listaPedido.map((item) => (
+                  <li key={item._id}>
+                    • {item.nome} - {item.quantidade} x R${item.preco.toFixed(2)} = R${item.subtotal.toFixed(2)}
+                    <button onClick={() => removerItem(item._id)} className='establishment-page__pedido-remove-btn'>
+                      Remover 1
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <p className='establishment-page__pedido-total'>Total: R${precoTotal.toFixed(2)}</p>
             </div>
           ) : (
             <p style={{ marginTop: '5rem', fontStyle: 'italic', fontSize:'1.7rem' , paddingBottom: '10rem', display:'flex', alignContent:'center', justifyContent:'center' }}>Nenhum item no cardápio deste estabelecimento!</p>

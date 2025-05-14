@@ -930,3 +930,53 @@ body {
   max-width: 20rem;
   clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
 }
+
+.establishment-page__titles--full-width{
+  background-color:var(--main-color);
+  color: white;
+  padding: 1rem 3.5rem 1rem 2rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.establishment-page__pedido-total{
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.establishment-page__pedido-list{
+  list-style: none;
+  text-align: center;
+  font-size: 1.5rem;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+
+.establishment-page__pedido-remove-btn{
+  border: none;
+  background-color: white;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  color: red;
+  margin-left: 0.5rem;
+}
+
+.establishment-page__pedido-remove-btn:hover{
+  text-decoration: underline;
+}
+
+.establishment-page__pedido-adicionar-btn{
+  border: none;
+  background-color: white;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  color: green;
+}
+.establishment-page__pedido-adicionar-btn:hover{
+  text-decoration: underline;
+}
