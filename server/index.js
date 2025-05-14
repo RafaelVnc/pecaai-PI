@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import routeCardapio from "./routes/cardapioRoute.js";
 import routeEstabelecimento from "./routes/estabelecimentoRoute.js";
+import routePedido from "./routes/pedidoRoutes.js";
 
 const app = express();
 app.use(bodyParser.json());
@@ -29,3 +30,4 @@ app.use("/uploads", express.static("uploads"));
 
 app.use("/cardapio", routeCardapio);
 app.use("/estabelecimento", routeEstabelecimento);
+app.use("/pedidos", routePedido);

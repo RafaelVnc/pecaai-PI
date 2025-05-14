@@ -7,6 +7,8 @@ import ItemList from '../components/ItemList';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faStar } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import axios from 'axios';
+import SuccessModal from '../components/SuccessModal';
 
 
 const generateColorFromString = (str) => {
@@ -76,6 +78,10 @@ const Estabelecimento = () => {
   
       const [listaPedido, setListaPedido] = useState([]);
 
+      useEffect(() => {
+        console.log(listaPedido);
+      }, [listaPedido]);
+
       const adicionarAoPedido = (item) => {
         setListaPedido((prevLista) => {
           const existente = prevLista.find((i) => i._id === item._id);
@@ -111,6 +117,34 @@ const Estabelecimento = () => {
         .filter(Boolean)
     );
   };
+
+  const [showSuccessModal, setSuccessModal] = useState(false);
+
+  const handleCriarPedido = async () => {
+    const itens = listaPedido.map(item => ({
+      _idItem: item._id,
+      nome: item.nome,
+      preco: item.preco,
+      quantidade: item.quantidade,
+      subtotal: item.subtotal
+    }));
+  
+    const total = precoTotal;
+  
+    const pedido = {
+      itens,
+      total,
+      idEstabelecimento: id
+    };
+  
+    try {
+      const response = await axios.post('http://localhost:8000/pedidos/pedido', pedido);
+      if (response.status === 201) setSuccessModal(true);
+    } catch (error) {
+      console.error('Erro ao criar pedido:', error.response?.data || error.message);
+    }
+  }
+
   const color = generateColorFromString(estabelecimento.nomeEstabelecimento || '');
   const entradaArray = cardapioArray.filter(i => i.categoria === "Entrada");
   const pratoPrincipalArray = cardapioArray.filter(i => i.categoria === "Prato principal");
@@ -151,24 +185,36 @@ const Estabelecimento = () => {
               <ItemList categoria="Prato principal" itensArray={pratoPrincipalArray} isEstabelecimento={false} onAddItem={adicionarAoPedido}/>
               <ItemList categoria="Bebida" itensArray={bebidaArray} isEstabelecimento={false} onAddItem={adicionarAoPedido}/>
               <ItemList categoria="Sobremesa" itensArray={sobremesaArray} isEstabelecimento={false} onAddItem={adicionarAoPedido}/>
-              <h3 className="establishment-page__titles--full-width">Pedido</h3>
-              <ul className='establishment-page__pedido-list'>
-                {listaPedido.map((item) => (
-                  <li key={item._id}>
-                    • {item.nome} - {item.quantidade} x R${item.preco.toFixed(2)} = R${item.subtotal.toFixed(2)}
-                    <button onClick={() => removerItem(item._id)} className='establishment-page__pedido-remove-btn'>
-                      Remover 1
-                    </button>
-                  </li>
-                ))}
-              </ul>
-              <p className='establishment-page__pedido-total'>Total: R${precoTotal.toFixed(2)}</p>
+              {
+                listaPedido.length > 0 &&(
+                  <>
+                    <h3 className="establishment-page__titles--full-width">Pedido</h3>
+                    <div className='establishment-page__pedido-container'>
+                      <ul className='establishment-page__pedido-list'>
+                        {listaPedido.map((item) => (
+                          <li key={item._id}>
+                            • {item.nome} - {item.quantidade} x R${item.preco.toFixed(2)} = R${item.subtotal.toFixed(2)}
+                            <button onClick={() => removerItem(item._id)} className='establishment-page__pedido-remove-btn'>
+                              Remover 1
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                      <p className='establishment-page__pedido-total'>Total: R${precoTotal.toFixed(2)}</p>
+                      <button onClick={handleCriarPedido} className='establishment-page__criar-pedido-btn'>Criar pedido</button>
+                    </div>
+                  </>
+              )}
             </div>
           ) : (
             <p style={{ marginTop: '5rem', fontStyle: 'italic', fontSize:'1.7rem' , paddingBottom: '10rem', display:'flex', alignContent:'center', justifyContent:'center' }}>Nenhum item no cardápio deste estabelecimento!</p>
           )
         }
       </div>
+      
+      {showSuccessModal && (
+        <SuccessModal isEstablishment={true}/>
+      )}
     </>
   );
 }

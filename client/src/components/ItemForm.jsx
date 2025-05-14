@@ -152,7 +152,7 @@ const ItemForm = ({
         </div>
       </form>
 
-      {showSuccess && <SuccessModal />}
+      {showSuccess && <SuccessModal isEstablishment={false}/>}
     </div>
   );
 };
