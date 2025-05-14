@@ -10,7 +10,7 @@ export const getCardapioArray = async () => {
     try {
         const token = getAuthToken();
         if (!token) {
-            throw new Error("Token expirado, redirecionar página login");
+            window.location.replace('/');;
         }
 
         const response = await axios.get("http://localhost:8000/cardapio", {

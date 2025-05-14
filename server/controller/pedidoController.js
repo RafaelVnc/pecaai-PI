@@ -1,14 +1,27 @@
 import Pedido from "../model/pedidoModel.js"
+import { Contador } from "../model/contadorCodPedidoModel.js";
+
+async function getProximoCodigoPedido() {
+  const resultado = await Contador.findOneAndUpdate(
+    { nome: 'pedido' },
+    { $inc: { valor: 1 } },
+    { new: true, upsert: true }
+  );
+
+  const numero = resultado.valor.toString().padStart(5, '0'); // Ex: 00001
+  return `PED-${numero}`;
+}
 
 export const criarPedido = async (req, res) => {
   try {
-    const { itens, total, idEstabelecimento } = req.body;
+    const { itens, total, status, idEstabelecimento } = req.body;
+    const codigo = await getProximoCodigoPedido();
 
     if (!itens || !Array.isArray(itens) || itens.length === 0) {
       return res.status(400).json({ error: 'Itens são obrigatórios.' });
     }
 
-    const pedido = new Pedido({ itens, total, idEstabelecimento});
+    const pedido = new Pedido({ itens, total, status, codigoPedido:codigo , idEstabelecimento});
     await pedido.save();
     res.status(201).json(pedido);
   } catch (error) {
@@ -21,7 +34,7 @@ export const getPedidosByUserId = async (req, res) => {
     const idEstabelecimento = req.user.idEstabelecimento; // Pegando o idEstabelecimento do token (req.user vem do middleware JWT)
     const pedidos = await Pedido.find({ idEstabelecimento });
 
-    if (itens.length === 0) {
+    if (pedidos.length === 0) {
       return res.status(404).json({ errorMessage: "Nenhum pedido encontrado para este usuário" });
     }
 

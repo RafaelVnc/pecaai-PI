@@ -78,10 +78,6 @@ const Estabelecimento = () => {
   
       const [listaPedido, setListaPedido] = useState([]);
 
-      useEffect(() => {
-        console.log(listaPedido);
-      }, [listaPedido]);
-
       const adicionarAoPedido = (item) => {
         setListaPedido((prevLista) => {
           const existente = prevLista.find((i) => i._id === item._id);
@@ -134,6 +130,7 @@ const Estabelecimento = () => {
     const pedido = {
       itens,
       total,
+      status:"Recebido",
       idEstabelecimento: id
     };
   

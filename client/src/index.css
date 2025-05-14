@@ -1043,3 +1043,65 @@ body {
   border: 4px solid white;
   padding: 0.25rem 3rem;
 }
+
+/* Order-List */
+.order-list__container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* espaço entre os pedidos */
+  justify-content: center; /* centraliza as linhas */
+  padding: 10px;
+}
+
+/* Single-Order */
+.single-order__container {
+  flex: 0 1 calc(50% - 20px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* distribui verticalmente */
+  height: 100%; /* garante que o pedido use altura total disponível */
+  min-height: 250px; /* define altura mínima para uniformidade */
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.single-order__labels {
+  display: grid;
+  grid-template-columns: 2fr 0.5fr 1fr 1fr;
+  font-weight: bold;
+  border-bottom: 1px solid #000000;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.single-order__itens-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.single-order__itens-list li {
+  display: grid;
+  grid-template-columns: 2fr 0.5fr 1fr 1fr;
+  padding: 4px 0;
+}
+
+.single-order__itens-list--qtd {
+  text-align: center;
+  margin-right: 10px;
+}
+
+.single-order__itens-total{
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.single-order__itens-next-btn{
+  background-color: #d3d3d3;
+  border: 2px solid var(--cinza-light);
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+}

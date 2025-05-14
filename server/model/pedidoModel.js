@@ -30,6 +30,14 @@ const pedidoSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  status: {
+    type: String,
+    required: true
+  },
+  codigoPedido:{
+    type: String,
+    unique: true
+  },
   idEstabelecimento:{
     type:mongoose.Schema.Types.ObjectId,
     ref: 'Estabelecimento',
