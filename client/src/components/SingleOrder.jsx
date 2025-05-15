@@ -1,13 +1,31 @@
 import React from 'react';
+import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 
-const SingleOrder = ({ itens, total, codigoPedido, status, nextStatus }) => {
+const SingleOrder = ({ _id, itens, total, codigoPedido, status, nextStatus, refreshPedidos }) => {
   const statusColors = {
-    "Recebido": "salmon",
-    "Em Produção": "yellow",
-    "Concluído": "lightgreen"
+    "Recebido": "#ff4d4d",
+    "Em Produção": "#ffff1a",
+    "Concluído": "#33cc33"
+  };
+
+  const handleNextStatus = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:8000/pedidos/pedido/${_id}`,
+        {
+          status: nextStatus,
+        }
+      );
+
+      if (response.status === 200) {
+        refreshPedidos(); // Atualiza o estado sem reload
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar o status do pedido:", error);
+    }
   };
 
   return (
@@ -29,12 +47,12 @@ const SingleOrder = ({ itens, total, codigoPedido, status, nextStatus }) => {
           </li>
         ))}
       </ul>
-      
       <h3 className='single-order__itens-total'>Total: R$ {total.toFixed(2)}</h3>
-
-      <button className='single-order__itens-next-btn'>{nextStatus} <FontAwesomeIcon icon={faArrowRight} /></button>
+      <button className='single-order__itens-next-btn' onClick={handleNextStatus}>
+        {nextStatus} <FontAwesomeIcon icon={faArrowRight} />
+      </button>
     </div>
-  )
-}
+  );
+};
 
 export default SingleOrder

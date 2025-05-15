@@ -5,15 +5,15 @@ import OrderList from '../components/OrderList.jsx';
 
 const Pedidos = () => {
   const [pedidoArray, setPedidoArray] = useState([]);
-      
-    useEffect(() => {
-      const fetchData = async () => {
-        const data = await getPedidosArray();
-        setPedidoArray(data);
-      };
-      
-      fetchData();
-    }, []);
+
+  const fetchData = async () => {
+    const data = await getPedidosArray();
+    setPedidoArray(data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const recebidoArray = pedidoArray.filter(o => o.status === "Recebido");
   const emProducaoArray = pedidoArray.filter(o => o.status === "Em Produção");
@@ -21,11 +21,11 @@ const Pedidos = () => {
 
   return (
     <div className='main'>
-      <OrderList status={"Recebido"} orderArray={recebidoArray} nextStatus={"Em Produção"}/>
-      <OrderList status={"Em Produção"} orderArray={emProducaoArray} nextStatus={"Concluído"}/>
-      <OrderList status={"Concluído"} orderArray={concluidoArray} nextStatus={"Deletado"}/>
+      <OrderList status={"Recebido"} orderArray={recebidoArray} nextStatus={"Em Produção"} refreshPedidos={fetchData}/>
+      <OrderList status={"Em Produção"} orderArray={emProducaoArray} nextStatus={"Concluído"} refreshPedidos={fetchData}/>
+      <OrderList status={"Concluído"} orderArray={concluidoArray} nextStatus={"Deletado"} refreshPedidos={fetchData}/>
     </div>
-  )
+  );
 }
 
-export default Pedidos
+export default Pedidos;

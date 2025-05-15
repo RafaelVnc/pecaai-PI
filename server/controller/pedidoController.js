@@ -44,6 +44,26 @@ export const getPedidosByUserId = async (req, res) => {
   }
 };
 
+export const updatePedido = async(req, res) => {
+  try {
+    const pedidoId = req.params.id;
+    const dadosAtualizados = req.body;
+
+    const pedido = await Pedido.findByIdAndUpdate(pedidoId, dadosAtualizados, {
+      new: true,
+      runValidators: true
+    });
+
+    if (!pedido) {
+      return res.status(404).json({ mensagem: 'Pedido não encontrado' });
+    }
+
+    res.json(pedido);
+  } catch (erro) {
+    res.status(500).json({ mensagem: 'Erro ao atualizar pedido', erro: erro.message });
+  }
+};
+
 /*export const deletarPedido = async (req, res) => {
   try {
     const pedidoRemovido = await Pedido.findByIdAndDelete(req.body._id);

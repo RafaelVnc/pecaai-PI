@@ -1,7 +1,7 @@
 import React from 'react'
 import SingleOrder from './SingleOrder'
 
-const OrderList = ({ status, orderArray, nextStatus }) => {
+const OrderList = ({ status, orderArray, nextStatus, refreshPedidos }) => {
   const finalItems = Infinity;
 
   return (
@@ -11,15 +11,20 @@ const OrderList = ({ status, orderArray, nextStatus }) => {
       </div>
       <div className='order-list__container'>
         {orderArray
-          .filter((currentValue, index) => index < finalItems)
+          .filter((_, index) => index < finalItems)
           .map((currObj, index) => (
-          <SingleOrder 
-          {...currObj} nextStatus={nextStatus} status={status}
-          key={`${status}-${index}`} />
+            <SingleOrder 
+              {...currObj}
+              key={`${status}-${index}`}
+              nextStatus={nextStatus}
+              status={status}
+              refreshPedidos={refreshPedidos}
+            />
         ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default OrderList
+
+export default OrderList;

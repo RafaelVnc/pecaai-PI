@@ -712,6 +712,36 @@ body {
   color: var(--main-color-dark);
 }
 
+@media (max-width: 768px) {
+  .header-cliente {
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+  }
+
+  .header-cliente__left {
+    width: auto;
+    margin-bottom: 0.5em;
+  }
+
+  .header-cliente__logo {
+    position: static;
+    transform: none;
+    width: 10rem;
+    margin-bottom: 0.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-cliente__logo {
+    width: 8rem;
+  }
+
+  .header-cliente__link {
+    font-size: 0.9rem;
+  }
+}
+
 /* Landing Page */
 .landing__main-container {
   display: flex;
