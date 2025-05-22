@@ -10,7 +10,7 @@ export const getCardapioArray = async () => {
     try {
         const token = getAuthToken();
         if (!token) {
-            window.location.replace('/');;
+            window.location.replace('/login');
         }
 
         const response = await axios.get("http://localhost:8000/cardapio", {
@@ -28,7 +28,16 @@ export const getCardapioArray = async () => {
 
 export const getCardapioByIdEstabelecimento = async (id) => {
     try {
-        const response = await axios.get(`http://localhost:8000/cardapio/estabelecimento/${id}`)
+        const token = getAuthToken();
+        if (!token) {
+            window.location.replace('/login');
+        }
+        
+        const response = await axios.get(`http://localhost:8000/cardapio/estabelecimento/`, {
+            headers: {
+                Authorization: token, // Adiciona o token JWT no cabeçalho
+            },
+        });
 
         return response.data;
     } catch (error) {

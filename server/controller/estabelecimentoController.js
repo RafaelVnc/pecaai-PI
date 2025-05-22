@@ -177,7 +177,7 @@ export const logarEstabelecimento = async (req, res) => {
 export const getEstabelecimentoById = async (req, res) => {
     try{
         const _id = req.user.idEstabelecimento;
-        const estabelecimento = await Estabelecimento.findOne({ _id }).select("-senha -CPF -_id");
+        const estabelecimento = await Estabelecimento.findOne({ _id }).select("-senha -CPF ");
         res.status(200).json({estabelecimento});
     } catch (error) {
         res.status(500).json({ errorMessage: error.message });

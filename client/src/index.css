@@ -8,6 +8,26 @@
   --text-color:#FFFF;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--main-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--main-color-dark);
+}
+
 /* Reset */
 * {
   padding: 0;
@@ -411,19 +431,7 @@ body {
 }
 
 .login-form img {
-  margin-top: -1.3rem;
-}
-
-.login__back-btn{
-  text-decoration: none;
-  color: white;
-  margin-left: -70%;
-  margin-top: 3rem;
-  font-size: 1.5rem;
-}
-
-.login__back-btn:hover{
-  color: var(--main-color-dark);
+  margin-top: 4rem;
 }
 
 .login-form img{
@@ -435,7 +443,6 @@ body {
   font-family: "Poppins", sans-serif;
   font-size: 2.9rem;
   color: #FFF;
-
 }
 
 .login-form__form{
@@ -490,6 +497,20 @@ body {
 
 .login-form__btn:hover{
   background-color: var(--cinza-light);
+}
+
+@media (min-width: 1920px) {
+  .login-form img {
+    margin-top: 2rem;
+  }
+
+  .login-form h2{
+    margin-top: 3rem;
+  } 
+
+  .login__back-btn{
+    margin-top: 5rem;
+  }
 }
 
 /*Cadastro*/
@@ -747,7 +768,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: stretch; 
-  height: 100%;
+  height: 100vh;
   width: 100%;
   background-color: white;
   padding-top: 9rem; 
@@ -872,20 +893,10 @@ body {
   height: 100%;
   width: 100%;
   background-color: white;
-  padding-top: 6rem; 
+  margin-top: -1rem;
   padding-left: 2rem;
   padding-right: 2rem;
   padding-bottom: 2rem;
-}
-
-.establishment-page__back-btn{
-  text-decoration: none;
-  color: var(--main-color);
-  font-size: 1.5rem;
-}
-
-.establishment-page__back-btn:hover{
-  color: var(--main-color-dark);
 }
 
 .establishment-page__info{
@@ -904,7 +915,7 @@ body {
 }
 
 .establishment-page__info-right{
-  margin-left: 34%;
+  margin-left: 20%;
   margin-top: 3rem;
   text-align: right;
 }
@@ -930,13 +941,13 @@ body {
 
 .establishment-page__titles{
   display: inline-block;
-  background-color: var(--main-color);
+  background-color: var(--main-color-dark);
   color: white;
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: bold;
   font-family: "Poppins", sans-serif;
   padding: 1rem 3.5rem 1rem 2rem;
-  margin-left: -2rem;
+  margin-left: -1rem;
   margin-bottom: 2rem;
   max-width: 15rem;
   clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
@@ -1096,6 +1107,7 @@ body {
   padding: 15px;
   border-radius: 8px;
   background-color: #fff;
+  color: #000000;
 }
 
 .single-order__labels {

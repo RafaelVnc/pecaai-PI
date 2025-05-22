@@ -28,9 +28,8 @@ const Login = () => {
 
     return (
         <div className="login-form">
-                <Link to={"/"} className="login__back-btn"><FontAwesomeIcon icon={faArrowLeft} /> Voltar</Link>
             <img src={logo} />
-            <h2>Login Estabelecimento</h2>
+            <h2>Login</h2>
             <form onSubmit={handleLogin} className="login-form__form">
                 <input 
                     type="email" 

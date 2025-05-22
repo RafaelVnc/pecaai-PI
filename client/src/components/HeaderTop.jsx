@@ -8,7 +8,7 @@ const HeaderTop = () => {
     <div className='header-cliente'>
       <div className='header-cliente__left'></div>
       <img src={logo} alt="Logo peça aí!" className='header-cliente__logo' />
-      <Link to={"/loginEstabelecimento"} className='header-cliente__link'>Sou Estabelecimento</Link>
+      <Link to={"/loginEstabelecimento"} className='header-cliente__link'>Meu Gerenciador</Link>
     </div>
   )
 }

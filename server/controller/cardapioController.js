@@ -50,7 +50,7 @@ export const getItemById = async(req, res) => {
 
 export const getItensByIdEstabelecimento = async (req, res) => {
   try {
-    const idEstabelecimento = req.params.id;
+    const idEstabelecimento = req.user.idEstabelecimento; // Pegando o idEstabelecimento do token (req.user vem do middleware JWT)
 
     const itens = await itemCardapio.find({ idEstabelecimento });
 

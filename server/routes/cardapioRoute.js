@@ -6,7 +6,7 @@ import authMiddleware from "../config/authMiddleware.js"
 const routeCardapio = express.Router();
 routeCardapio.post("/item", authMiddleware, upload.single("fotoURL") , adicionarItem);
 routeCardapio.get("/", authMiddleware, getItensByUserId);
-routeCardapio.get("/estabelecimento/:id", getItensByIdEstabelecimento);
+routeCardapio.get("/estabelecimento/", authMiddleware, getItensByIdEstabelecimento);
 routeCardapio.put("/item/:id", upload.single("fotoURL"), updateItem);
 routeCardapio.delete("/item/:id", deleteItem);
 
