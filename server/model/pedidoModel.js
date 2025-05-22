@@ -42,6 +42,19 @@ const pedidoSchema = new mongoose.Schema({
     type:mongoose.Schema.Types.ObjectId,
     ref: 'Estabelecimento',
     required: true
+  },
+  dataHoraCriacao: {
+    type: String,
+    default: () => {
+      const now = new Date();
+      const pad = n => n.toString().padStart(2, '0');
+      const dia = pad(now.getDate());
+      const mes = pad(now.getMonth() + 1);
+      const ano = now.getFullYear();
+      const hora = pad(now.getHours());
+      const minuto = pad(now.getMinutes());
+      return `${dia}/${mes}/${ano} - ${hora}:${minuto}`;
+    }
   }
 });
 

@@ -1110,6 +1110,12 @@ body {
   color: #000000;
 }
 
+.single-order__cod-pedido-data-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .single-order__labels {
   display: grid;
   grid-template-columns: 2fr 0.5fr 1fr 1fr;

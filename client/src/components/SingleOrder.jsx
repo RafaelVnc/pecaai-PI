@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 
-const SingleOrder = ({ _id, itens, total, codigoPedido, status, nextStatus, refreshPedidos }) => {
+const SingleOrder = ({ _id, itens, total, codigoPedido, status, nextStatus, dataHoraCriacao, refreshPedidos }) => {
   const statusColors = {
     "Recebido": "#ff4d4d",
     "Em Produção": "#ffff1a",
@@ -30,7 +30,10 @@ const SingleOrder = ({ _id, itens, total, codigoPedido, status, nextStatus, refr
 
   return (
     <div className='single-order__container' style={{ backgroundColor: statusColors[status] || 'white' }}>
-      <h2 className='single-order__cod-pedido'>{codigoPedido}</h2>
+      <div className='single-order__cod-pedido-data-container'>
+        <h2 className='single-order__cod-pedido'>{codigoPedido}</h2>
+        <h3>{dataHoraCriacao}</h3>
+      </div>
       <div className="single-order__labels">
         <span>Produto</span>
         <span className='single-order__itens-list--qtd'>Qtd</span>
