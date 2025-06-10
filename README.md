@@ -7,6 +7,9 @@
 <a href=https://trello.com/b/8EgfAWCg/backlog-pi3>
   <img alt="Link Quadro Trello" src="https://img.shields.io/badge/Acessar%20Backlog%20-Trello-%3204">
 </a>
+<a href=https://youtu.be/8yFosP7a5uY?si=FXR68K8JVo7Xmzcd>
+  <img alt="Link Video Showcase" src="https://img.shields.io/badge/Acessar%20Video%20Showcase%20-Youtube-FF0000">
+</a>
 
 # Baixando dependências (Somente na 1°vez rodando)
 ```
