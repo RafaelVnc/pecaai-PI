@@ -11,6 +11,19 @@
   <img alt="Link Video Showcase" src="https://img.shields.io/badge/Acessar%20Video%20Showcase%20-Youtube-FF0000">
 </a>
 
+# Configure .env
+```
+# Crie um arquivo ".env" dentro da pasta server
+
+# Preencha as seguintes variáveis:
+PORT (Porta do servidor backend a ser usada)
+MONGO_URL (URL do banco de dados mongo)
+PUBLIC_KEY_PATH = ./config/public.pem (Padrão)
+PRIVATE_KEY_PATH = ./config/private.pem (Padrão)
+JWT_SECRET (qualquer sequência de caracteres, desde que seja secreta, aleatória e suficientemente longa para garantir a segurança da assinatura dos tokens JWT.)
+
+```
+
 # Baixando dependências (Somente na 1°vez rodando)
 ```
 cd client
